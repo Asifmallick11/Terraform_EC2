@@ -18,10 +18,6 @@ jobs:
               working-directory: ./terraform
               run: terraform init
 
-            - name: Terraform Plan
-              working-directory: ./terraform
-              run: terraform plan
-
             - name: Terraform Apply
               working-directory: ./terraform
               run: |
@@ -29,6 +25,6 @@ jobs:
                     -var="access_key=${{ secrets.ACCESS_KEY }}" \
                     -var="secret_key=${{ secrets.SECRET_KEY }}" \
                     -var="public_key=${{ secrets.PUBLIC_KEY }}"
-                    
+
             - name: Done
               run: echo "EC2 Created"
