@@ -1,0 +1,34 @@
+name: CICD for Terraform EC2
+on:
+    push:
+        branches: [main]
+
+jobs:
+    deploy:
+        name: Terraform EC2
+        runs-on: ubuntu-latest
+        steps:
+            - name : Code Checkout
+              uses : actions/checkout@v3
+
+            - name: Setup Terraform
+              uses: hashicorp/setup-terraform@v3
+
+            - name: Terraform Init
+              working-directory: ./terraform
+              run: terraform init
+
+            - name: Terraform Plan
+              working-directory: ./terraform
+              run: terraform plan
+
+            - name: Terraform Apply
+              working-directory: ./terraform
+              run: |
+                terraform apply -auto-approve \
+                    -var="access_key=${{ secrets.ACCESS_KEY }}" \
+                    -var="secret_key=${{ secrets.SECRET_KEY }}" \
+                    -var="public_key=${{ secrets.PUBLIC_KEY }}"
+                    
+            - name: Done
+              run: echo "EC2 Created"
