@@ -41,6 +41,10 @@ variable "instance_name" {
   type        = string
 }
 
+variable "private_key" {
+  description = "Private key to shh into ec2"
+  type        = string
+}
 
 
 

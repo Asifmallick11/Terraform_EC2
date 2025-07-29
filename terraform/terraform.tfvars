@@ -6,4 +6,4 @@ instance_name = "MyEc2Instance"
 access_key = ""
 secret_key = ""
 public_key = ""
-
+private_key = ""

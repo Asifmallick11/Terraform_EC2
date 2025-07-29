@@ -55,7 +55,7 @@ resource "aws_instance" "ec2_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu" 
-      private_key = var.public_key
+      private_key = var.private_key
       host        = self.public_ip
     }
   }
