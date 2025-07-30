@@ -46,17 +46,17 @@ resource "aws_instance" "ec2_instance" {
     Name = var.instance_name
   }
 
-   provisioner "remote-exec" {
-    inline = [
-      "sudo apt update" ,
-      "curl https://get.docker.com | bash"
-    ]
+  #  provisioner "remote-exec" {
+  #   inline = [
+  #     "sudo apt update" ,
+  #     "curl https://get.docker.com | bash"
+  #   ]
 
-    connection {
-      type        = "ssh"
-      user        = "ubuntu" 
-      private_key = var.private_key
-      host        = self.public_ip
-    }
-  }
+  #   connection {
+  #     type        = "ssh"
+  #     user        = "ubuntu" 
+  #     private_key = var.private_key
+  #     host        = self.public_ip
+  #   }
+  # }
 }
