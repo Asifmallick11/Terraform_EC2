@@ -36,7 +36,7 @@ jobs:
                 -var="private_key=${{ secrets.PRIVATE_KEY }}" \
               
             - name: Done
-              run: echo "EC2 Created"
+              run: echo "EC2 Created Successfully"
               
               
             
