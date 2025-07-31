@@ -1,3 +1,11 @@
+terraform {
+  backend "s3" {
+    bucket = "asif-tfstate" 
+    key = "key/terraform.tfstate"
+    region = var.aws_region
+  }
+}
+
 provider "aws" {
   region = var.aws_region
   access_key = var.access_key
