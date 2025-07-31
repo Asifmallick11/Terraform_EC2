@@ -17,25 +17,22 @@ jobs:
             - name: Terraform Init
               working-directory: ./terraform
               run: terraform init
-              env:
-                AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-                AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-                TF_VAR_public_key: ${{ secrets.PUBLIC_KEY }}
-                TF_VAR_private_key: ${{ secrets.PRIVATE_KEY }}
-
+              # env:
+              #   AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+              #   AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
 
             - name: Terraform Plan
               working-directory: ./terraform
               run: | 
-                terraform plan 
+                terraform plan \
                 -var="access_key=${{ secrets.ACCESS_KEY }}" \
                 -var="secret_key=${{ secrets.SECRET_KEY }}" \
                 -var="public_key=${{ secrets.PUBLIC_KEY }}" \
                 -var="private_key=${{ secrets.PRIVATE_KEY }}" \
                 -out=tfplan
-              env:
-                AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-                AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+              # env:
+              #   AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+              #   AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
 
             - name: Terraform Apply
               working-directory: ./terraform
