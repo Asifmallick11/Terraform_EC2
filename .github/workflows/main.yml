@@ -4,7 +4,7 @@ on:
         branches: [main]
 
 jobs:
-    deploy:
+    terraform:
         name: Terraform EC2
         runs-on: ubuntu-latest
         steps:
@@ -17,6 +17,9 @@ jobs:
             - name: Terraform Init
               working-directory: ./terraform
               run: terraform init
+              env:
+                AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+                AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
 
             - name: Terraform Plan
               working-directory: ./terraform
