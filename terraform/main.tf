@@ -1,15 +1,15 @@
-# terraform {
-#   backend "s3" {
-#     bucket = "asif-tfstate" 
-#     key = "terraform.tfstate"
-#     region = "ap-south-1"
-#   }
-# }
-
 provider "aws" {
   region = var.aws_region
   access_key = var.access_key
   secret_key = var.secret_key
+}
+
+terraform {
+  backend "s3" {
+    bucket = "asif-tfstate" 
+    key = "terraform.tfstate"
+    region = "ap-south-1"
+  }
 }
 
 resource "aws_key_pair" "ec2_key" {
