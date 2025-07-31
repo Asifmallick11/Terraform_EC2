@@ -90,7 +90,7 @@ data "template_file" "inventory" {
 }
 
 resource "local_file" "dynamic_inventory" {
-  depends_on = [aws_instance.public_instance]
+  depends_on = [aws_instance.ec2_instance]
 
   filename = "dynamic_inventory.ini"
   content  = data.template_file.inventory.rendered
