@@ -20,22 +20,34 @@ jobs:
               env:
                 AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
                 AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+                TF_VAR_public_key: ${{ secrets.PUBLIC_KEY }}
+                TF_VAR_private_key: ${{ secrets.PRIVATE_KEY }}
+
 
             - name: Terraform Plan
               working-directory: ./terraform
-              run: terraform plan -out=tfplan
+              run: | 
+                terraform plan 
+                -var="access_key=${{ secrets.ACCESS_KEY }}" \
+                -var="secret_key=${{ secrets.SECRET_KEY }}" \
+                -var="public_key=${{ secrets.PUBLIC_KEY }}" \
+                -var="private_key=${{ secrets.PRIVATE_KEY }}" \
+                -out=tfplan
               env:
                 AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
                 AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
 
             - name: Terraform Apply
               working-directory: ./terraform
-              run: |
-                terraform apply -auto-approve \
-                    -var="access_key=${{ secrets.ACCESS_KEY }}" \
-                    -var="secret_key=${{ secrets.SECRET_KEY }}" \
-                    -var="public_key=${{ secrets.PUBLIC_KEY }}" \
-                    -var="private_key=${{ secrets.PRIVATE_KEY }}" \
-
+              run: terraform apply -auto-approve tfplan
+              
             - name: Done
               run: echo "EC2 Created"
+              
+              
+              
+              # env:
+              #   AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+              #   AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+              #   TF_VAR_public_key: ${{ secrets.PUBLIC_KEY }}
+              #   TF_VAR_private_key: ${{ secrets.PRIVATE_KEY }}
