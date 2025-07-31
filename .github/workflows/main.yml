@@ -28,7 +28,8 @@ jobs:
 
             - name: Terraform Apply
               working-directory: ./terraform
-              run: terraform apply -auto-approve \
+              run: |
+               terraform apply -auto-approve \
                 -var="access_key=${{ secrets.ACCESS_KEY }}" \
                 -var="secret_key=${{ secrets.SECRET_KEY }}" \
                 -var="public_key=${{ secrets.PUBLIC_KEY }}" \
