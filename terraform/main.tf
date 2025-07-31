@@ -61,17 +61,27 @@ resource "aws_instance" "ec2_instance" {
     Name = var.instance_name
   }
 
-  #  provisioner "remote-exec" {
-  #   inline = [
-  #     "sudo apt update" ,
-  #     "curl https://get.docker.com | bash"
-  #   ]
+   provisioner "remote-exec" {
+    inline = [
+      "sudo apt update" ,
+      "curl https://get.docker.com | bash"
+    ]
 
-  #   connection {
-  #     type        = "ssh"
-  #     user        = "ubuntu" 
-  #     private_key = var.private_key
-  #     host        = self.public_ip
-  #   }
-  # }
+    connection {
+      type        = "ssh"
+      user        = "ubuntu" 
+      private_key = var.private_key
+      host        = self.public_ip
+    }
+  }
+
+  provisioner "local-exec" {
+    command = <<EOT
+      echo "[instance-ip]" > inventory.ini
+      echo "${self.public_ip} >> inventory.ini
+    EOT
+    
+  }
+
+  depends_on = [aws_key_pair.ec2_key, aws_security_group.ec2_sg]
 }
