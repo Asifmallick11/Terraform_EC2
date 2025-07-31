@@ -76,12 +76,23 @@ resource "aws_instance" "ec2_instance" {
   }
 
   provisioner "local-exec" {
-    command = <<EOT
-      echo "[instance-ip]" > inventory.ini
-      echo "${self.public_ip} >> inventory.ini
-    EOT
-    
+    command = "touch dynamic_inventory.ini"
   }
 
   depends_on = [aws_key_pair.ec2_key, aws_security_group.ec2_sg]
+}
+
+data "template_file" "inventory" {
+  template = <<-EOT
+    [ec2_instances]
+    ${aws_instance.ec2_instance.public_ip}
+    EOT
+}
+
+resource "local_file" "dynamic_inventory" {
+  depends_on = [aws_instance.public_instance]
+
+  filename = "dynamic_inventory.ini"
+  content  = data.template_file.inventory.rendered
+
 }
